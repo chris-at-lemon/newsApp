@@ -7,3 +7,10 @@ test("renders learn react link", () => {
   const linkElement = screen.getByRole("heading", { name: /great news/i });
   expect(linkElement).toBeInTheDocument();
 });
+
+test("new items exist", () => {
+  render(<App />);
+  const newsSummery = screen.getByTestId("newsSummary");
+  expect(newsSummery).toBeVisible;
+  expect(newsSummery).toContainHTML("div");
+});
