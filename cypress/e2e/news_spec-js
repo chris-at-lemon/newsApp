@@ -1,8 +1,0 @@
-import { createYield } from "typescript";
-
-describe("news", () => {
-  it("user can read news", () => {
-    // open page
-    cy.visit("/");
-  });
-});

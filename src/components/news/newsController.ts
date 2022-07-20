@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { httpGet } from "../modules/http";
+import { httpGet } from "../../modules/http";
 import { nanoid } from "nanoid";
-import { INews } from "../interfaces/news";
+import { INews } from "../../interfaces/news";
 
 export const useMainController = () => {
   const [news, setNews] = useState<INews[]>();
@@ -12,7 +12,7 @@ export const useMainController = () => {
       let newsItems = getNewsItems.response.articles;
       // add unique ID to each news item
       newsItems.map((article: INews) => {
-        article.id = nanoid();
+        return (article.id = nanoid());
       });
       setNews(newsItems);
     };
