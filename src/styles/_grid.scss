@@ -1,12 +1,9 @@
 .row {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
+  flex-direction: row; /* only for desktop */
 }
 .col {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
+  flex-grow: 1; 
+  flex-shrink:  1; 
+  flex-basis:  100%; 
 }

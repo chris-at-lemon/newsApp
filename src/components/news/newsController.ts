@@ -10,24 +10,37 @@ export const useMainController = () => {
     const getNews = async () => {
       const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
       let newsItems = getNewsItems.response.articles;
-      // add unique ID to each news item
+      // add unique ID and read status to each news item
       newsItems.map((article: INews) => {
-        return (article.id = nanoid());
+        return (article.id = nanoid()), (article.read = false);
       });
       setNews(newsItems);
     };
     getNews();
   }, []);
 
+  console.log(news);
+
   // Select article to read
   const [selectedArticle, setSelectedArticle] = useState<any>();
-  console.log("selectedArticle", selectedArticle);
 
   const selectArticle = (id: string) => {
-    console.log("selected", id);
     const thisArticle: any = news?.filter((item: any) => item.id === id)[0];
-    console.log("thisarticle", thisArticle);
     setSelectedArticle(thisArticle);
+  };
+
+  // Set article as read
+  const handleReadStatus = (id: string) => {
+    // Only if news exist
+    if (news) {
+      // Find article index
+      const articleIndex: number = news?.findIndex((obj) => obj.id === id);
+      //Update property at found index
+      const setToRead = { ...news[articleIndex], read: true };
+      // Slice, insert updated news object
+      const updatedNews = [...news.slice(0, articleIndex), setToRead, ...news.slice(articleIndex + 1)];
+      setNews(updatedNews);
+    }
   };
 
   return {
@@ -35,6 +48,7 @@ export const useMainController = () => {
     selectedArticle,
     fn: {
       selectArticle,
+      handleReadStatus,
     },
   };
 };

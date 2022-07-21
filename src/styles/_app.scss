@@ -5,9 +5,11 @@
 
 // Article List
 .articleListContainer {
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  flex-basis: auto;
   border: 1px solid #ccc;
   padding: 1rem;
   margin-bottom: .25rem;
@@ -15,6 +17,10 @@
 
   &:hover {
     box-shadow: 0px 3px 7px -3px rgba(0,0,0,0.57);
+  }
+
+  &.markedRead {
+    border: 1px solid darkgreen;
   }
 }
 .articleThumbWrapper {
@@ -29,8 +35,29 @@
     object-fit: cover;
   }
 }
+.articleDetailsContainer {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .articleTitle {
   padding-left: 2rem;
+  font-weight: bold;
+}
+.metaDataContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.articleDate {
+  padding-left: 2rem;
+}
+.articleReadIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: darkgreen;
 }
 
 // Article view
@@ -38,15 +65,14 @@
   border: 1px solid #ccc;
   padding: 1rem;
 }
-
 .fullArticleContainer {
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+.fullArticleHeaderContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  margin-bottom: .25rem;
-  cursor: pointer;
 
   &:hover {
     box-shadow: 0px 3px 7px -3px rgba(0,0,0,0.57);
@@ -62,4 +88,8 @@
 }
 .fullArticleTitle {
   padding-left: 2rem;
+
+  & h2 {
+    margin: 0;
+  }
 }

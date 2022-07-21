@@ -11,4 +11,5 @@ export interface INews {
   publishedAt: string;
   content: string;
   id?: string;
+  read?: false | any;
 }
