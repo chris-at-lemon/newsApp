@@ -2,7 +2,6 @@
 .newsSummary, .newsFullArticle {
   padding: 1rem;
 }
-
 // Article List
 .articleListContainer {
   position: relative;
@@ -13,6 +12,7 @@
   border: 1px solid #ccc;
   padding: 1rem;
   margin-bottom: .25rem;
+  background: #fff;
   cursor: pointer;
 
   &:hover {
@@ -49,6 +49,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+  }
+
+  & .author {
+    @media (max-width: 991px) {
+      padding-left: 2rem;;
+    }
+  }
 }
 .articleDate {
   padding-left: 2rem;
@@ -59,6 +69,12 @@
   right: 0;
   color: darkgreen;
 }
+.articleFavIcon {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  color: rgb(163, 13, 13);
+}
 
 // Article view
 .selectedArticleContainer {
@@ -68,19 +84,17 @@
 .fullArticleContainer {
   border: 1px solid #ccc;
   padding: 1rem;
+
+  & .articleDate {
+    padding-left: 0;
+  }
 }
 .fullArticleHeaderContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
-  &:hover {
-    box-shadow: 0px 3px 7px -3px rgba(0,0,0,0.57);
-  }
 }
 .fullArticleThumbWrapper {
-
-
   & img {
     width: 10rem;
     height: auto;
@@ -93,3 +107,23 @@
     margin: 0;
   }
 }
+
+// Menu
+.menuBtnWrapper {
+  display: none;
+  position: absolute;
+  margin-left: 1rem;
+  margin-top: -1rem;
+
+  @media (max-width: 991px) {
+    display: block;
+  }
+
+  & .menuBtn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+} 

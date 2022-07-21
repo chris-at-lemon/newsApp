@@ -12,4 +12,5 @@ export interface INews {
   content: string;
   id?: string;
   read?: false | any;
+  fav?: false | any;
 }
