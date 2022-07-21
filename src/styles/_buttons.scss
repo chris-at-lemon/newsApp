@@ -7,10 +7,10 @@
   
   &.btn-mark-read {
     color: #fff;
-    background-color: rgba(#006400, 1);
+    background-color: rgba(#198754, 1);
 
     &:hover {
-      background-color: rgba(#006400, .8);
+      background-color: rgba(#198754, .8);
     }
   }
   &.btn-set-fav {
@@ -19,6 +19,17 @@
 
     &:hover {
       background-color: rgba(#a5091e, .8);
+    }
+  }
+  &.btn-reset {
+    padding: calc(1rem + 2px);
+    color: #fff;
+    font-size: 1rem;
+    background-color: rgba(#0d6efd, 1);
+    margin-left: -2px;
+
+    &:hover {
+      background-color: rgba(#0d6efd, .8);
     }
   }
 }

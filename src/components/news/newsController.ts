@@ -5,21 +5,22 @@ import { INews } from "../../interfaces/news";
 
 export const useMainController = () => {
   const [news, setNews] = useState<INews[]>();
+  const [cachedNews, setCachedNews] = useState<INews[]>();
+
+  const getNews = async () => {
+    const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
+    let newsItems = getNewsItems.response.articles;
+    // add unique ID, read and fav status to each news item
+    newsItems.map((article: INews) => {
+      return (article.id = nanoid()), (article.read = false), (article.fav = false);
+    });
+    setNews(newsItems);
+    setCachedNews(newsItems);
+  };
 
   useEffect(() => {
-    const getNews = async () => {
-      const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
-      let newsItems = getNewsItems.response.articles;
-      // add unique ID, read and fav status to each news item
-      newsItems.map((article: INews) => {
-        return (article.id = nanoid()), (article.read = false), (article.fav = false);
-      });
-      setNews(newsItems);
-    };
     getNews();
   }, []);
-
-  console.log(news);
 
   // Select article to read
   const [selectedArticle, setSelectedArticle] = useState<any>();
@@ -67,11 +68,13 @@ export const useMainController = () => {
     news,
     selectedArticle,
     menuIsActive,
+    cachedNews,
     fn: {
       selectArticle,
       handleReadStatus,
       handleFavStatus,
       toggleMenu,
+      setNews,
     },
   };
 };

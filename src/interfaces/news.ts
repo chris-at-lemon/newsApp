@@ -14,3 +14,11 @@ export interface INews {
   read?: false | any;
   fav?: false | any;
 }
+
+export interface ICurrentNews {
+  currentNews: INews[];
+}
+
+export interface ISearchNews {}
+
+export interface ISetNews {}

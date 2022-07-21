@@ -3,11 +3,14 @@ import { default as dayjs } from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight, faCheckSquare, faBars, faCheck, faHeart } from "@fortawesome/free-solid-svg-icons";
 
+import SearchNews from "../search/searchNews";
+
 function News() {
-  const { news, selectedArticle, menuIsActive, fn } = useMainController();
+  const { news, selectedArticle, menuIsActive, cachedNews, fn } = useMainController();
 
   return (
     <div className="container">
+      <div className="searchContainer">{news && <SearchNews currentNews={news} cachedNews={cachedNews} setNews={fn.setNews} />}</div>
       <div className="menuBtnWrapper">
         <button onClick={fn.toggleMenu} className="menuBtn" aria-label="toggle menu" data-testid="menuBtn">
           <FontAwesomeIcon icon={faBars} />
@@ -31,7 +34,15 @@ function News() {
                     <div className="readIconContainer">{article.read && <FontAwesomeIcon className="articleReadIcon" icon={faCheckSquare} />}</div>
                     <div className="favIconContainer">{article.fav && <FontAwesomeIcon className="articleFavIcon" icon={faHeart} />}</div>
                     <div className="articleThumbWrapper">
-                      <img className="articleThumb" src={article.urlToImage} alt="article thumbnail" />
+                      <img
+                        className="articleThumb"
+                        src={article.urlToImage}
+                        alt="article thumbnail"
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = "https://via.placeholder.com/150";
+                        }}
+                      />
                     </div>
                     <div className="articleDetailsContainer">
                       <div className="articleTitle">
