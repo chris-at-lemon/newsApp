@@ -5,8 +5,33 @@ import { INews } from "../../interfaces/news";
 
 export const useMainController = () => {
   const [news, setNews] = useState<INews[]>();
-  const [cachedNews, setCachedNews] = useState<INews[]>();
+  console.log("news", news);
 
+  const [cachedNews, setCachedNews] = useState<INews[]>();
+  console.log("cachedNews", cachedNews);
+
+  // Pagination
+  const [pageNumber, setPageNumber] = useState(1);
+  console.log("pageNumber", pageNumber);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(5);
+
+  const paginatedPosts = news?.slice(start, end);
+  console.log("paginatedPosts", paginatedPosts);
+
+  const handlePrev = () => {
+    if (pageNumber === 1) return;
+    setPageNumber(pageNumber - 1);
+    setStart(start - 5);
+    setEnd(end - 5);
+  };
+  const handleNext = () => {
+    setPageNumber(pageNumber + 1);
+    setStart(start + 5);
+    setEnd(end + 5);
+  };
+
+  // Fetch news
   const getNews = async () => {
     const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
     let newsItems = getNewsItems.response.articles;
@@ -14,8 +39,11 @@ export const useMainController = () => {
     newsItems.map((article: INews) => {
       return (article.id = nanoid()), (article.read = false), (article.fav = false);
     });
-    setNews(newsItems);
-    setCachedNews(newsItems);
+
+    let news = [...newsItems];
+    setNews(news);
+    let newsToCache = [...newsItems];
+    setCachedNews(newsToCache);
   };
 
   useEffect(() => {
@@ -41,6 +69,7 @@ export const useMainController = () => {
       // Slice, insert updated news object
       const updatedNews = [...news.slice(0, articleIndex), setToRead, ...news.slice(articleIndex + 1)];
       setNews(updatedNews);
+      setCachedNews(updatedNews);
     }
   };
 
@@ -55,6 +84,7 @@ export const useMainController = () => {
       // Slice, insert updated news object
       const updatedNews = [...news.slice(0, articleIndex), setToRead, ...news.slice(articleIndex + 1)];
       setNews(updatedNews);
+      setCachedNews(updatedNews);
     }
   };
 
@@ -69,12 +99,15 @@ export const useMainController = () => {
     selectedArticle,
     menuIsActive,
     cachedNews,
+    paginatedPosts,
     fn: {
       selectArticle,
       handleReadStatus,
       handleFavStatus,
       toggleMenu,
       setNews,
+      handlePrev,
+      handleNext,
     },
   };
 };

@@ -11,7 +11,6 @@ export const useSearchController = (currentNews: any, setNews: any, cachedNews: 
     let thisValue = e.target.value;
     let filtered = currentNews.filter((article: any) => article.title.toLowerCase().includes(thisValue.toLowerCase()));
     if (thisValue === "") {
-      console.log("Hello");
       setNews(cachedNews);
     } else {
       setNews(filtered);

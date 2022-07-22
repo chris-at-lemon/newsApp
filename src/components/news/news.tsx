@@ -6,7 +6,7 @@ import { faChevronCircleRight, faCheckSquare, faBars, faCheck, faHeart } from "@
 import SearchNews from "../search/searchNews";
 
 function News() {
-  const { news, selectedArticle, menuIsActive, cachedNews, fn } = useMainController();
+  const { news, selectedArticle, menuIsActive, cachedNews, paginatedPosts, fn } = useMainController();
 
   return (
     <div className="container">
@@ -19,8 +19,8 @@ function News() {
       <div className="row">
         <div className={`col col-articleList ${menuIsActive ? "isActive" : "isInactive"}`}>
           <div className="newsSummary" data-testid="newsSummary">
-            {news &&
-              news.map((article, i: number) => {
+            {paginatedPosts &&
+              paginatedPosts.map((article, i: number) => {
                 return (
                   <div
                     className={`articleListContainer ${article.read && "markedRead"}`}
@@ -56,6 +56,10 @@ function News() {
                   </div>
                 );
               })}
+          </div>
+          <div>
+            <button onClick={fn.handlePrev}>prev</button>
+            <button onClick={fn.handleNext}>next</button>
           </div>
         </div>
         <div className="col">
