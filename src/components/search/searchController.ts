@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { ISearchNews, ISetNews, INews } from "../../interfaces/news";
+import { useState } from "react";
 
 export const useSearchController = (currentNews: any, setNews: any, cachedNews: any) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -17,8 +16,15 @@ export const useSearchController = (currentNews: any, setNews: any, cachedNews: 
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleQuery(e);
+    }
+  };
+
   const resetNews = () => {
     setNews(cachedNews);
+    setInputValue("");
   };
 
   return {
@@ -27,6 +33,7 @@ export const useSearchController = (currentNews: any, setNews: any, cachedNews: 
       handleQuery,
       setInputValue,
       resetNews,
+      handleKeyDown,
     },
   };
 };

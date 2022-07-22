@@ -45,9 +45,7 @@ function News() {
                       />
                     </div>
                     <div className="articleDetailsContainer">
-                      <div className="articleTitle">
-                        {article.title} {JSON.stringify(article.read)}
-                      </div>
+                      <div className="articleTitle">{article.title}</div>
                       <div className="metaDataContainer">
                         <div className="articleDate">{dayjs(article.publishedAt).format("DD/MM/YYYY")}</div>
                         <div className="author">{article.author}</div>

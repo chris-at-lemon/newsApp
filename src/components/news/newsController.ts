@@ -4,11 +4,14 @@ import { nanoid } from "nanoid";
 import { INews } from "../../interfaces/news";
 
 export const useMainController = () => {
-  const [news, setNews] = useState<INews[]>();
-  console.log("news", news);
-
-  const [cachedNews, setCachedNews] = useState<INews[]>();
+  // Cached news is the source of truth.
+  // This would be the global state, we could use Recoil/Context/state management library in its place
+  const [cachedNews, setCachedNews] = useState<INews[]>([]);
   console.log("cachedNews", cachedNews);
+
+  // News will be mutated to what users filter, search, paginate
+  const [news, setNews] = useState<INews[]>([]);
+  // console.log("news", news);
 
   // Pagination
   const [pageNumber, setPageNumber] = useState(1);
@@ -17,7 +20,7 @@ export const useMainController = () => {
   const [end, setEnd] = useState(5);
 
   const paginatedPosts = news?.slice(start, end);
-  console.log("paginatedPosts", paginatedPosts);
+  // console.log("paginatedPosts", paginatedPosts);
 
   const handlePrev = () => {
     if (pageNumber === 1) return;
@@ -36,14 +39,12 @@ export const useMainController = () => {
     const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
     let newsItems = getNewsItems.response.articles;
     // add unique ID, read and fav status to each news item
-    newsItems.map((article: INews) => {
-      return (article.id = nanoid()), (article.read = false), (article.fav = false);
+    const extendedNewsitems = newsItems.map((article: INews) => {
+      return { ...article, id: nanoid(), read: false, fav: false };
     });
 
-    let news = [...newsItems];
-    setNews(news);
-    let newsToCache = [...newsItems];
-    setCachedNews(newsToCache);
+    setNews(extendedNewsitems);
+    setCachedNews(extendedNewsitems);
   };
 
   useEffect(() => {
@@ -60,10 +61,13 @@ export const useMainController = () => {
 
   // Set article as read
   const handleReadStatus = (id: string) => {
-    // Only if news exist
-    if (news) {
+    // Check whether article list has been mutated by search (or any other potential mutations) after article has loaded into view pane
+    const IdFound = news?.some((el) => el.id === id);
+
+    // If news exist and article list has not been mutated:
+    if (news && IdFound) {
       // Find article index
-      const articleIndex: number = news?.findIndex((obj) => obj.id === id);
+      const articleIndex: number = news.findIndex((obj) => obj.id === id);
       //Update property at found index
       const setToRead = { ...news[articleIndex], read: true };
       // Slice, insert updated news object
@@ -71,19 +75,49 @@ export const useMainController = () => {
       setNews(updatedNews);
       setCachedNews(updatedNews);
     }
+
+    // If article list has been mutated:
+    if (news && !IdFound && cachedNews) {
+      // Find article index
+      const articleIndex: number = cachedNews.findIndex((obj) => obj.id === id);
+      //Update property at found index
+      const setToRead = { ...cachedNews[articleIndex], read: true };
+      // Slice, insert updated news object
+      const updatedNews = [...cachedNews.slice(0, articleIndex), setToRead, ...cachedNews.slice(articleIndex + 1)];
+
+      setCachedNews(updatedNews);
+    }
   };
 
   // Set article as read
   const handleFavStatus = (id: string) => {
-    // Only if news exist
-    if (news) {
+    // Check whether article list has been mutated by search (or any other potential mutations) after article has loaded in view pane
+    const IdFound = news?.some((el) => el.id === id);
+
+    // If news exist and article list has not been mutated:
+    if (news && IdFound) {
+      console.log("fount it");
       // Find article index
-      const articleIndex: number = news?.findIndex((obj) => obj.id === id);
+      const articleIndex: number = news.findIndex((obj) => obj.id === id);
       //Update property at found index
-      const setToRead = { ...news[articleIndex], fav: true };
+      const setToFav = { ...news[articleIndex], fav: true };
       // Slice, insert updated news object
-      const updatedNews = [...news.slice(0, articleIndex), setToRead, ...news.slice(articleIndex + 1)];
+      const updatedNews = [...news.slice(0, articleIndex), setToFav, ...news.slice(articleIndex + 1)];
+
+      // Update news and cached news
       setNews(updatedNews);
+      setCachedNews(updatedNews);
+    }
+    // If article list has been mutated:
+    if (news && !IdFound && cachedNews) {
+      // Find article index
+      const articleIndex: number = cachedNews.findIndex((obj) => obj.id === id);
+      //Update property at found index
+      const setToFav = { ...cachedNews[articleIndex], fav: true };
+      // Slice, insert updated news object
+      const updatedNews = [...cachedNews.slice(0, articleIndex), setToFav, ...cachedNews.slice(articleIndex + 1)];
+
+      //Update only cached
       setCachedNews(updatedNews);
     }
   };
