@@ -2,10 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
-test("renders learn react link", () => {
+test("renders main page components", () => {
   render(<App />);
-  const linkElement = screen.getByRole("heading", { name: /great news/i });
-  expect(linkElement).toBeInTheDocument();
+  const header = screen.getByRole("heading", { name: /great news/i });
+  expect(header).toBeInTheDocument();
 });
 
 test("new items exist", () => {
@@ -13,4 +13,10 @@ test("new items exist", () => {
   const newsSummery = screen.getByTestId("newsSummary");
   expect(newsSummery).toBeVisible;
   expect(newsSummery).toContainHTML("div");
+});
+
+test("search input is focussed when page loads", () => {
+  render(<App />);
+  const searchInput = screen.getByRole("textbox");
+  expect(searchInput).toHaveFocus;
 });
