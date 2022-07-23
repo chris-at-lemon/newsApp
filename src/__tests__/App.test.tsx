@@ -8,7 +8,7 @@ test("renders main page components", () => {
   expect(header).toBeInTheDocument();
 });
 
-test("new items exist", () => {
+test("news items exist", () => {
   render(<App />);
   const newsSummery = screen.getByTestId("newsSummary");
   expect(newsSummery).toBeVisible;
@@ -20,3 +20,9 @@ test("search input is focussed when page loads", () => {
   const searchInput = screen.getByRole("textbox");
   expect(searchInput).toHaveFocus;
 });
+
+test("button displays when page loads", () => {
+  render(<App />);
+  const resetSearch = screen.getByRole('button', {  name: /reset search/i});
+  expect(resetSearch).toHaveClass('btn-reset')
+})

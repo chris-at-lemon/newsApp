@@ -7,7 +7,7 @@ export const useMainController = () => {
   // Cached news is the source of truth.
   // This would be the global state, we could use Recoil/Context/state management library in its place
   const [cachedNews, setCachedNews] = useState<INews[]>([]);
-  console.log("cachedNews", cachedNews);
+  //console.log("cachedNews", cachedNews);
 
   // News will be mutated to what users filter, search, paginate
   const [news, setNews] = useState<INews[]>([]);
@@ -15,13 +15,19 @@ export const useMainController = () => {
 
   // Pagination
   const [pageNumber, setPageNumber] = useState(1);
-  console.log("pageNumber", pageNumber);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
 
   const paginatedPosts = news?.slice(start, end);
   // console.log("paginatedPosts", paginatedPosts);
 
+  // find total pages
+  let totalPages = Math.floor(news.length / 5);
+  if (totalPages === 0) {
+    totalPages = 1;
+  }
+
+  // handle previous and next
   const handlePrev = () => {
     if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
@@ -29,6 +35,7 @@ export const useMainController = () => {
     setEnd(end - 5);
   };
   const handleNext = () => {
+    if (pageNumber === totalPages) return;
     setPageNumber(pageNumber + 1);
     setStart(start + 5);
     setEnd(end + 5);
@@ -71,7 +78,11 @@ export const useMainController = () => {
       //Update property at found index
       const setToRead = { ...news[articleIndex], read: true };
       // Slice, insert updated news object
-      const updatedNews = [...news.slice(0, articleIndex), setToRead, ...news.slice(articleIndex + 1)];
+      const updatedNews = [
+        ...news.slice(0, articleIndex),
+        setToRead,
+        ...news.slice(articleIndex + 1),
+      ];
       setNews(updatedNews);
       setCachedNews(updatedNews);
     }
@@ -83,13 +94,17 @@ export const useMainController = () => {
       //Update property at found index
       const setToRead = { ...cachedNews[articleIndex], read: true };
       // Slice, insert updated news object
-      const updatedNews = [...cachedNews.slice(0, articleIndex), setToRead, ...cachedNews.slice(articleIndex + 1)];
+      const updatedNews = [
+        ...cachedNews.slice(0, articleIndex),
+        setToRead,
+        ...cachedNews.slice(articleIndex + 1),
+      ];
 
       setCachedNews(updatedNews);
     }
   };
 
-  // Set article as read
+  // Set article as fav
   const handleFavStatus = (id: string) => {
     // Check whether article list has been mutated by search (or any other potential mutations) after article has loaded in view pane
     const IdFound = news?.some((el) => el.id === id);
@@ -102,7 +117,11 @@ export const useMainController = () => {
       //Update property at found index
       const setToFav = { ...news[articleIndex], fav: true };
       // Slice, insert updated news object
-      const updatedNews = [...news.slice(0, articleIndex), setToFav, ...news.slice(articleIndex + 1)];
+      const updatedNews = [
+        ...news.slice(0, articleIndex),
+        setToFav,
+        ...news.slice(articleIndex + 1),
+      ];
 
       // Update news and cached news
       setNews(updatedNews);
@@ -115,7 +134,11 @@ export const useMainController = () => {
       //Update property at found index
       const setToFav = { ...cachedNews[articleIndex], fav: true };
       // Slice, insert updated news object
-      const updatedNews = [...cachedNews.slice(0, articleIndex), setToFav, ...cachedNews.slice(articleIndex + 1)];
+      const updatedNews = [
+        ...cachedNews.slice(0, articleIndex),
+        setToFav,
+        ...cachedNews.slice(articleIndex + 1),
+      ];
 
       //Update only cached
       setCachedNews(updatedNews);
@@ -134,6 +157,8 @@ export const useMainController = () => {
     menuIsActive,
     cachedNews,
     paginatedPosts,
+    pageNumber,
+    totalPages,
     fn: {
       selectArticle,
       handleReadStatus,
