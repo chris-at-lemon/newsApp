@@ -41,20 +41,22 @@ export const useMainController = () => {
     setEnd(end + 5);
   };
 
-  // Fetch news
-  const getNews = async () => {
-    const getNewsItems: any = await httpGet("http://localhost:8000/v1/news?q=");
-    let newsItems = getNewsItems.response.articles;
-    // add unique ID, read and fav status to each news item
-    const extendedNewsitems = newsItems.map((article: INews) => {
-      return { ...article, id: nanoid(), read: false, fav: false };
-    });
-
-    setNews(extendedNewsitems);
-    setCachedNews(extendedNewsitems);
-  };
-
+  // Fetch news on component load
   useEffect(() => {
+    const getNews = async () => {
+      const getNewsItems: any = await httpGet(
+        "http://localhost:8000/v1/news?q="
+      );
+      let newsItems = getNewsItems.response.articles;
+      // add unique ID, read and fav status to each news item
+      const extendedNewsitems = newsItems.map((article: INews) => {
+        return { ...article, id: nanoid(), read: false, fav: false };
+      });
+
+      setNews(extendedNewsitems);
+      setCachedNews(extendedNewsitems);
+    };
+
     getNews();
   }, []);
 

@@ -71,6 +71,7 @@ function News() {
                         <FontAwesomeIcon
                           className="articleReadIcon"
                           icon={faCheckSquare}
+                          data-testid={article.title + "isRead"}
                         />
                       )}
                     </div>
@@ -79,6 +80,7 @@ function News() {
                         <FontAwesomeIcon
                           className="articleFavIcon"
                           icon={faHeart}
+                          data-testid={article.title + "isFav"}
                         />
                       )}
                     </div>
