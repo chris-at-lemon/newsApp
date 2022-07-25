@@ -157,3 +157,22 @@
   display: inline-block;
   margin: 0 1rem 0 1rem;
 }
+
+// Footer
+footer {
+  @media (max-width: 991px) {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    width: 100%;
+  }
+}
+.footerContainer {
+  text-align: center;
+  border-top: 1px solid #ccc;
+  padding: 1rem 0 1rem 0;
+  margin-top: 1rem;
+}
+.love {
+  color: #ff0000;
+}
