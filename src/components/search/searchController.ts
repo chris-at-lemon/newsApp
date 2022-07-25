@@ -3,7 +3,7 @@ import { INews } from "../../interfaces/news";
 
 export const useSearchController = (
   currentNews: INews[],
-  setNews: (arg: any) => void,
+  setNews: (arg: INews[]) => void,
   cachedNews: INews[]
 ) => {
   const [inputValue, setInputValue] = useState<string>("");

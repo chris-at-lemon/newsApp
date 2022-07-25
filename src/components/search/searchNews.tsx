@@ -7,7 +7,7 @@ const SearchNews = ({
   cachedNews,
 }: {
   currentNews: INews[];
-  setNews: (arg: any) => void;
+  setNews: (arg: INews[]) => void;
   cachedNews: INews[];
 }) => {
   const { inputValue, fn } = useSearchController(
