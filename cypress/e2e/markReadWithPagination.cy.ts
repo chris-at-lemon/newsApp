@@ -1,5 +1,5 @@
 describe("news", () => {
-  it("user can mark read status and set favs", () => {
+  it("read and fav status persist through page navigation", () => {
     // open page
     cy.visit("/");
     // click on news item
@@ -17,6 +17,7 @@ describe("news", () => {
     // go to prev page
     cy.findByRole("button", { name: /prev/i }).click();
     cy.findByRole("button", { name: /prev/i }).click();
+    // check status has persisted
     cy.findByTestId(
       "Lady Gaga falls off Las Vegas concert stage - Fox NewsisRead"
     ).should("be.visible");

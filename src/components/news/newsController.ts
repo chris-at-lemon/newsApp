@@ -41,6 +41,13 @@ export const useMainController = () => {
     setEnd(end + 5);
   };
 
+  // Reset pagination when news are mutated
+  useEffect(() => {
+    setStart(0);
+    setEnd(5);
+    setPageNumber(1);
+  }, [news]);
+
   // Fetch news on component load
   useEffect(() => {
     const getNews = async () => {
