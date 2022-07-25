@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# Some notes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Typescript
 
-## Available Scripts
+I use Typscript for better code quality and easier coding. I admit that with limited time I resorted to "any" as a quick bailout on occasion :)
 
-In the project directory, you can run:
+# State
 
-### `npm start`
+I do do not use a global state. I store all news items in a state variable "cachedNews" which is the global reference throughout the session.
+To persist between state between sessions we could have saved this variable into local storage. Alternatively saving the same variable in an atom and using recoil-persist would also give us a persistent global state.
+For this project I opted for the simplest way. Neither context nor recoil were really needed here.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 3rd party plugins
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+day.js for handling dates. It is more lighweight and more efficient that moment.js.
+nanoId for unique ID generating. It is smaller and faster than uuid. I like the use of unique IDs to hook into data generated items in the dome. In this small project I could also simple have referred to array iterators.
 
-### `npm test`
+# Testing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I tend to put the emphasis on e2e tests as that is how the user will use the site
+I did not mock or stub the API call as it's only 1 call on a local host
 
-### `npm run build`
+In Cypress use cy.wait for 2 reasons:
+1: it helps me see what's going on and debug 2. give it a moment to wait for data
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Lighthouse
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Lighthouse scores 100/100 mobile andesktop :) (throughout except peroformace due to it running on local host before being compiled)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#If I had more time:
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- read and fav status are not reversible, they should be a toggle, not just a setState
+- search doesn't work when you backspace what you have typed already
+- suggestions for search
+- it could look at little mnore attractive
+- ... an app is never "done" ... :)
