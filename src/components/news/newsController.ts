@@ -85,7 +85,7 @@ export const useMainController = () => {
   const [selectedArticle, setSelectedArticle] = useState<any>();
 
   const selectArticle = (id: string) => {
-    const thisArticle: any = news?.filter((item: any) => item.id === id)[0];
+    const thisArticle: INews = news?.filter((item: INews) => item.id === id)[0];
     setSelectedArticle(thisArticle);
   };
 

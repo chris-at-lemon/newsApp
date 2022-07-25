@@ -12,7 +12,7 @@ export const useSearchController = (
     setInputValue(e.target.value);
 
     let thisValue = e.target.value;
-    let filtered = currentNews.filter((article: any) =>
+    let filtered = currentNews.filter((article: INews) =>
       article.title.toLowerCase().includes(thisValue.toLowerCase())
     );
     if (thisValue === "") {

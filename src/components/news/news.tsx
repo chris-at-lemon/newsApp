@@ -149,6 +149,10 @@ function News() {
                         className="fullArticleThumb"
                         src={selectedArticle.urlToImage}
                         alt="article thumbnail"
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = "https://via.placeholder.com/150";
+                        }}
                       />
                     </div>
                     <div className="fullArticleTitle">
