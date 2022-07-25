@@ -1,10 +1,19 @@
 import { useSearchController } from "./searchController";
+import { INews } from "../../interfaces/news";
 
-const SearchNews = (props: any) => {
+const SearchNews = ({
+  currentNews,
+  setNews,
+  cachedNews,
+}: {
+  currentNews: INews[];
+  setNews: (arg: any) => void;
+  cachedNews: INews[];
+}) => {
   const { inputValue, fn } = useSearchController(
-    props.currentNews,
-    props.setNews,
-    props.cachedNews
+    currentNews,
+    setNews,
+    cachedNews
   );
 
   return (

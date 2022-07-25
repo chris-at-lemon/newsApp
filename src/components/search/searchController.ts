@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { INews } from "../../interfaces/news";
 
 export const useSearchController = (
-  currentNews: any,
-  setNews: any,
-  cachedNews: any
+  currentNews: INews[],
+  setNews: (arg: any) => void,
+  cachedNews: INews[]
 ) => {
   const [inputValue, setInputValue] = useState<string>("");
 
