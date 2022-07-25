@@ -22,6 +22,7 @@ describe("news", () => {
     cy.findByRole("button", { name: /mark as read/i }).click();
     // click to set fav
     cy.findByRole("button", { name: /set as favourite/i }).click();
+    // Check icon visibility by test ID
     cy.findByTestId(
       "Barcelona v Real Madrid called off following unrest in Catalonia - The GuardianisRead"
     ).should("be.visible");

@@ -17,6 +17,8 @@ export const useMainController = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
+  const [nextPageDisabled, setNextPageDisabled] = useState<boolean>(false);
+  const [prevPageDisabled, setPrevPageDisabled] = useState<boolean>(true);
 
   const paginatedPosts = news?.slice(start, end);
   // console.log("paginatedPosts", paginatedPosts);
@@ -29,17 +31,32 @@ export const useMainController = () => {
 
   // handle previous and next
   const handlePrev = () => {
-    if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
     setStart(start - 5);
     setEnd(end - 5);
+
+    setNextPageDisabled(false);
   };
   const handleNext = () => {
-    if (pageNumber === totalPages) return;
     setPageNumber(pageNumber + 1);
     setStart(start + 5);
     setEnd(end + 5);
+
+    setPrevPageDisabled(false);
   };
+
+  // Control pagination
+  useEffect(() => {
+    if (pageNumber === totalPages) {
+      setNextPageDisabled(true);
+    } else {
+      setNextPageDisabled(false);
+    }
+
+    if (pageNumber === 1) {
+      setPrevPageDisabled(true);
+    }
+  }, [pageNumber, totalPages]);
 
   // Reset pagination when news are mutated
   useEffect(() => {
@@ -168,6 +185,8 @@ export const useMainController = () => {
     paginatedPosts,
     pageNumber,
     totalPages,
+    nextPageDisabled,
+    prevPageDisabled,
     fn: {
       selectArticle,
       handleReadStatus,

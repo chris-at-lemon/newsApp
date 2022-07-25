@@ -21,6 +21,8 @@ function News() {
     paginatedPosts,
     pageNumber,
     totalPages,
+    nextPageDisabled,
+    prevPageDisabled,
     fn,
   } = useMainController();
 
@@ -111,6 +113,7 @@ function News() {
               <button
                 className="btn btn-primary btn-paginate"
                 onClick={fn.handlePrev}
+                disabled={prevPageDisabled}
               >
                 <FontAwesomeIcon
                   className="readmoreIcon"
@@ -124,6 +127,7 @@ function News() {
               <button
                 className="btn btn-primary btn-paginate"
                 onClick={fn.handleNext}
+                disabled={nextPageDisabled}
               >
                 next{" "}
                 <FontAwesomeIcon
