@@ -1,5 +1,5 @@
 describe("news", () => {
-  it("find broken images", () => {
+  it("check for broken images", () => {
     // open page
     cy.visit("/");
 

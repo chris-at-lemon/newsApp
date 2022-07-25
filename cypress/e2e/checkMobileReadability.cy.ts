@@ -2,7 +2,6 @@ describe("news", () => {
   it("user can read and navigate news on mobile", () => {
     //change to mobile view
     cy.viewport("iphone-xr");
-
     // open page
     cy.visit("/");
     // click on news item

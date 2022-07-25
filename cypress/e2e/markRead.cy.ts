@@ -3,7 +3,7 @@ describe("news", () => {
     // open page
     cy.visit("/");
     // click on news item
-    cy.wait(300);
+    cy.wait(700);
     cy.findByTestId("articleSummary1").click();
     // click mark as read
     cy.findByRole("button", { name: /mark as read/i }).click();

@@ -7,11 +7,9 @@ export const useMainController = () => {
   // Cached news is the source of truth.
   // This would be the global state, we could use Recoil/Context/state management library in its place
   const [cachedNews, setCachedNews] = useState<INews[]>([]);
-  //console.log("cachedNews", cachedNews);
 
   // News will be mutated to what users filter, search, paginate
   const [news, setNews] = useState<INews[]>([]);
-  // console.log("news", news);
 
   // Pagination
   const [pageNumber, setPageNumber] = useState(1);
@@ -21,7 +19,6 @@ export const useMainController = () => {
   const [prevPageDisabled, setPrevPageDisabled] = useState<boolean>(true);
 
   const paginatedPosts = news?.slice(start, end);
-  // console.log("paginatedPosts", paginatedPosts);
 
   // find total pages
   let totalPages = Math.floor(news.length / 5);
@@ -137,7 +134,6 @@ export const useMainController = () => {
 
     // If news exist and article list has not been mutated:
     if (news && IdFound) {
-      console.log("fount it");
       // Find article index
       const articleIndex: number = news.findIndex((obj) => obj.id === id);
       //Update property at found index
