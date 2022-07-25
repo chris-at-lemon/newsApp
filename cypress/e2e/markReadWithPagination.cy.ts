@@ -3,20 +3,24 @@ describe("news", () => {
     // open page
     cy.visit("/");
     // click on news item
-    cy.wait(1000);
+    cy.wait(700);
+
+    // Load article into view
     cy.findByTestId("articleSummary4").click();
-    // click mark as read
+
+    // do a search
+    cy.wait(700);
+    cy.findByRole("textbox").type("nasa");
+
+    // mark article in view as read and fav
+    cy.wait(700);
     cy.findByRole("button", { name: /mark as read/i }).click();
-    // click to set fav
     cy.findByRole("button", { name: /set as favourite/i }).click();
-    cy.wait(1000);
-    // go to next page
-    cy.findByRole("button", { name: /next/i }).click();
-    cy.findByRole("button", { name: /next/i }).click();
-    cy.wait(1000);
-    // go to prev page
-    cy.findByRole("button", { name: /prev/i }).click();
-    cy.findByRole("button", { name: /prev/i }).click();
+
+    // reset search
+    cy.wait(700);
+    cy.findByRole("button", { name: /reset search/i }).click();
+
     // check status has persisted
     cy.findByTestId(
       "Lady Gaga falls off Las Vegas concert stage - Fox NewsisRead"

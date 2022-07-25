@@ -57,6 +57,7 @@
   & .author {
     @media (max-width: 991px) {
       padding-left: 2rem;
+      word-break: break-all;
     }
   }
 }
@@ -93,15 +94,26 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+  }
 }
 .fullArticleThumbWrapper {
   & img {
     width: 10rem;
     height: auto;
+    @media (max-width: 991px) {
+      width: 100%;
+    }
   }
 }
 .fullArticleTitle {
   padding-left: 2rem;
+
+  @media (max-width: 991px) {
+    padding-left: 0rem;
+  }
 
   & h2 {
     margin: 0;

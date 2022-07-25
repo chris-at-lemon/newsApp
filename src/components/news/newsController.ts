@@ -172,7 +172,7 @@ export const useMainController = () => {
   };
 
   // Handle article list meny
-  const [menuIsActive, setMenuIsActive] = useState<boolean>(false);
+  const [menuIsActive, setMenuIsActive] = useState<boolean>(true);
   const toggleMenu = () => {
     setMenuIsActive(!menuIsActive);
   };
